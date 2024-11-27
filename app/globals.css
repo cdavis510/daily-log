@@ -1,0 +1,45 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --family-color: #fff5d6;
+  --work-color: #ffe4cc;
+}
+.checkbox-item input[type="checkbox"] {
+  @apply accent-[#ffe4cc];
+}
+
+.checkbox-item:hover {
+  @apply transform scale-[1.01] transition-all duration-200;
+}
+
+.family-bg {
+  background-color: var(--family-color);
+}
+
+.work-bg {
+  background-color: var(--work-color);
+}
+
+.paper-lines {
+  background-image: linear-gradient(#e5e7eb 1px, transparent 1px);
+  background-size: 100% 2rem;
+  line-height: 2rem;
+}
+
+@layer components {
+  .btn {
+    @apply px-4 py-2 rounded-lg font-medium transition-colors
+           disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-primary {
+    @apply bg-blue-500 text-white hover:bg-blue-600;
+  }
+
+  .checkbox-item {
+    @apply flex items-center space-x-2 p-2 rounded-lg
+           hover:bg-gray-100 transition-colors;
+  }
+}

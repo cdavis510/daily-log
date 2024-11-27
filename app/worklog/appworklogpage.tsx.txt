@@ -1,0 +1,12 @@
+// app/worklog/page.tsx
+'use client';
+
+import React from 'react';
+
+export default function WorkLogPage() {
+  return (
+    <div>
+      <h1>Work Log</h1>
+    </div>
+  );
+}

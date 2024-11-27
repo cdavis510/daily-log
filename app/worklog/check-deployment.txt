@@ -1,0 +1,48 @@
+const https = require('https');
+
+// Simulating a function to get deployment status
+function getDeploymentStatus(deploymentUrl) {
+  return new Promise((resolve, reject) => {
+    https.get(`https://api.vercel.com/v11/deployments/${deploymentUrl}`, (res) => {
+      let data = '';
+      res.on('data', (chunk) => { data += chunk; });
+      res.on('end', () => {
+        resolve(JSON.parse(data));
+      });
+    }).on('error', (err) => {
+      reject(err);
+    });
+  });
+}
+
+// Simulating getting deployment logs
+function getDeploymentLogs(deploymentUrl) {
+  return new Promise((resolve, reject) => {
+    https.get(`https://api.vercel.com/v2/deployments/${deploymentUrl}/events`, (res) => {
+      let data = '';
+      res.on('data', (chunk) => { data += chunk; });
+      res.on('end', () => {
+        resolve(JSON.parse(data));
+      });
+    }).on('error', (err) => {
+      reject(err);
+    });
+  });
+}
+
+async function checkDeployment() {
+  const deploymentUrl = 'v0-customer-crm-and-portal-h55oi30uixg-1jngwvjnk.vercel.app';
+  
+  console.log('Checking deployment status...');
+  const status = await getDeploymentStatus(deploymentUrl);
+  console.log('Deployment Status:', status.state);
+  
+  console.log('\nFetching deployment logs...');
+  const logs = await getDeploymentLogs(deploymentUrl);
+  console.log('Recent Log Events:');
+  logs.events.slice(0, 5).forEach(event => {
+    console.log(`- ${event.date}: ${event.message}`);
+  });
+}
+
+checkDeployment().catch(console.error);
